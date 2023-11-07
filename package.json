@@ -1,43 +1,60 @@
 {
-    "name": "semaphore-boilerplate",
-    "description": "A simple DApp to use as a starting point for your project.",
-    "license": "MIT",
-    "repository": "git@github.com:semaphore-protocol/boilerplate.git",
-    "homepage": "https://github.com/semaphore-protocol/boilerplate",
-    "bugs": "https://github.com/semaphore-protocol/boilerplate/issues",
-    "private": true,
-    "scripts": {
-        "dev": "yarn workspaces foreach -pi run dev",
-        "dev:web-app": "yarn workspace web-app dev",
-        "dev:contracts": "yarn workspace contracts dev",
-        "lint": "eslint . --ext .js,.ts",
-        "prettier": "prettier -c .",
-        "prettier:write": "prettier -w .",
-        "copy:contract-artifacts": "ts-node scripts/copy-contract-artifacts.ts"
-    },
-    "keywords": [
-        "javascript",
-        "typescript",
-        "monorepo",
-        "zero-knowledge",
-        "semaphore",
-        "boilerplate"
-    ],
-    "workspaces": [
-        "apps/*"
-    ],
-    "packageManager": "yarn@3.2.1",
-    "devDependencies": {
-        "@types/node": "^17.0.9",
-        "@typescript-eslint/eslint-plugin": "^5.9.1",
-        "@typescript-eslint/parser": "^5.9.1",
-        "eslint": "^8.2.0",
-        "eslint-config-airbnb-base": "15.0.0",
-        "eslint-config-airbnb-typescript": "^16.1.0",
-        "eslint-config-prettier": "^8.3.0",
-        "eslint-plugin-import": "^2.25.2",
-        "prettier": "^2.5.1",
-        "ts-node": "^10.8.1",
-        "typescript": "^4.7.3"
+  "name": "competition-protocol-contracts",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "hardhat": "^2.19.0"
+  },
+  "scripts": {
+    "dev": "hardhat node & yarn compile && yarn deploy --network localhost",
+    "compile": "hardhat compile",
+    "download:snark-artifacts": "hardhat run scripts/download-snark-artifacts.ts",
+    "deploy": "yarn compile && hardhat deploy",
+    "test": "hardhat run scripts/download-snark-artifacts.ts && hardhat test",
+    "test:report-gas": "REPORT_GAS=true hardhat test",
+    "test:coverage": "hardhat coverage",
+    "typechain": "hardhat typechain",
+    "lint": "solhint 'contracts/**/*.sol'"
+  },
+  "dependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.4",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-verify": "^1.0.0",
+    "@openzeppelin/contracts": "4.7.0",
+    "@openzeppelin/contracts-upgradeable": "4.7.0",
+    "@openzeppelin/hardhat-upgrades": "^2.3.3",
+    "@semaphore-protocol/group": "^3.15.0",
+    "@semaphore-protocol/hardhat": "^3.15.0",
+    "@semaphore-protocol/identity": "^3.15.0",
+    "@semaphore-protocol/proof": "^3.15.0",
+    "@typechain/ethers-v6": "^0.4.0",
+    "@typechain/hardhat": "^8.0.0",
+    "@types/chai": "^4.2.0",
+    "@types/circomlibjs": "^0.1.5",
+    "@types/download": "^8.0.4",
+    "@types/mocha": ">=9.1.0",
+    "@types/node": ">=12.0.0",
+    "chai": "^4.2.0",
+    "circomlibjs": "^0.1.7",
+    "dotenv": "^16.3.1",
+    "download": "^8.0.0",
+    "ethers": "^6.4.0",
+    "hardhat-gas-reporter": "^1.0.8",
+    "solidity-coverage": "^0.8.1",
+    "ts-node": ">=8.0.0",
+    "typechain": "^8.2.0",
+    "typescript": "^5.2.2"
+  },
+  "config": {
+    "paths": {
+      "contracts": "./contracts",
+      "tests": "./test",
+      "cache": "./cache",
+      "libraries": "",
+      "build": {
+        "snark-artifacts": "./build/snark-artifacts"
+      }
     }
+  }
 }
