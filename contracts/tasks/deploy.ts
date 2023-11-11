@@ -5,7 +5,7 @@ task("deploy", "Deploy contracts")
     .addOptionalParam("logs", "Print the logs", true, types.boolean)
     .setAction(async ({ logs}, 
         { ethers, run }) => {
-        const { tc, rc, hackson, competitionProtocol } = await run("deploy:competitionProtocol", {
+        const { competitionProtocol } = await run("deploy:competitionProtocol", {
             logs
         })
         const { semaphoreVoting, pairingAddress, semaphoreVerifierAddress, 
@@ -18,36 +18,7 @@ task("deploy", "Deploy contracts")
     })
 
 
-        return {tc, rc, hackson, competitionProtocol,semaphoreVoting,semaphoreVerifierAddress, baloot}
-    });
-
-task("deploy:competitionProtocol", "Deploy competition protocol contracts")
-    .addOptionalParam("logs", "Print the logs", true, types.boolean)
-    .setAction(async ({ logs}, 
-        { ethers, upgrades, run }) =>{
-            const DefaultCompetition = await ethers.getContractFactory("DefaultCompetition");
-            const competitionProtocol = await upgrades.deployProxy(DefaultCompetition, []);
-
-            const Ticket20 = await ethers.getContractFactory("Ticket20");
-            const tc = await Ticket20.deploy();
-            await tc.waitForDeployment();
-
-            const Reward20 = await ethers.getContractFactory("Reward20");
-            const rc = await Reward20.deploy();
-            await rc.waitForDeployment();
-
-            const OnchainHackson = await ethers.getContractFactory("OnchainHackson");
-            const hackson = await OnchainHackson.deploy(await competitionProtocol.getAddress());
-            await hackson.waitForDeployment();
-
-            if(logs){
-                console.log("DefaultCompetition deployed to:", await competitionProtocol.getAddress());
-                console.log("Ticket20 deployed to:", await tc.getAddress());
-                console.log("Reward20 deployed to:", await rc.getAddress());
-                console.log("OnchainHackson deployed to:", await hackson.getAddress());
-            }
-
-            return {tc, rc, hackson, competitionProtocol}
+        return {competitionProtocol,semaphoreVoting,semaphoreVerifierAddress, baloot}
     });
 
 task("deploy:secretBallot", "Deploy a secret ballot contracts")

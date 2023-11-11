@@ -7,7 +7,7 @@ import "../interfaces/ITeller.sol";
 import "../interfaces/IBaseCompetition.sol";
 import "hardhat/console.sol";
 
-contract OnchainHackson is ITeller{
+contract OnchainHackthon is ITeller{
 
     struct Team {
         string name;

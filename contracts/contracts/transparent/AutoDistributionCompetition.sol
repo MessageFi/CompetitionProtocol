@@ -7,7 +7,7 @@ import "@chainlink/contracts/src/v0.8/automation/AutomationCompatible.sol";
 
 contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible{
 
-    uint256 checkIndex = 1;
+    uint256 internal checkIndex;
 
     function checkUpkeep(
         bytes calldata /* checkData */
@@ -21,8 +21,8 @@ contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible
         uint count = 0;
         // search finished competitions
         for (uint i = 0; i < 100; ++i) {
-            if (competitionMapping[i + checkIndex].endTime <= block.timestamp) {
-                finishedCompetitions[count] = i + checkIndex;
+            if (competitionMapping[i + checkIndex + 1].endTime <= block.timestamp) {
+                finishedCompetitions[count] = i + checkIndex + 1;
                 ++count;
             }
             if(count == 10){
@@ -43,7 +43,7 @@ contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible
                 break;
             }
             // Update check index
-            if(finishedCompetitions[i] == checkIndex){
+            if(finishedCompetitions[i] == checkIndex + 1){
                 checkIndex++;
             }
             _withdrawPrize(finishedCompetitions[i]);
