@@ -136,8 +136,6 @@ contract DefaultCompetition is
     {
         candidateId = ++competitionMapping[id].totalCandidates;
         candidateMapping[id][candidateId].player = player;
-        ++competitionMapping[id].totalCandidates;
-
         emit NewCandidate(id, candidateId, player);
         return candidateId;
     }

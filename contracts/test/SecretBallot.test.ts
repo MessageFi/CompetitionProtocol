@@ -90,7 +90,7 @@ describe("SecretBallot", () => {
             })
             const signers = await ethers.getSigners()
 
-            const transaction = ballotContract.connect(signers[2]).castVote(
+            const transaction = ballotContract.connect(signers[1]).castVote(
                 option,
                 fullProof.nullifierHash,
                 ballotId,

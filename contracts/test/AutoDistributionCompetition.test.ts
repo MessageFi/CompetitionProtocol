@@ -13,6 +13,7 @@ describe("AutoDistributionCompetition", () => {
     let reward: Reward20
     const rewards = [10000, 5000]
     const competitionId = 1;
+    const candidates = [1, 2]
 
     before(async () => {
         let result = await run("deploy:autoDistribution", {
@@ -26,7 +27,7 @@ describe("AutoDistributionCompetition", () => {
         reward = result["reward"];
     })
 
-    describe("# create competition", () => {
+    describe("# host competition", () => {
         it("Should create a competition", async () => {
             const competitionAddress = await autoCompetition.getAddress();
 
@@ -39,5 +40,35 @@ describe("AutoDistributionCompetition", () => {
                 .to.emit(autoCompetition, "NewCompetition")
             .withArgs(competitionId, singer.address)
         })
+
+        it("Should add a candidate", async () => {
+
+            const signers = await ethers.getSigners()
+            for (let index = 0; index < candidates.length; index++) {
+                const candidate = candidates[index];
+                const player = signers[index].address;
+                await expect(autoCompetition.registerCandidate(competitionId, 
+                    player))
+                    .to.emit(autoCompetition, "NewCandidate")
+                    .withArgs(competitionId, candidate, player)
+            }
+            
+        })
+
+        it("Should send tickets", async () => {
+            const [singer] = await ethers.getSigners();
+            for (let index = 0; index < candidates.length; index++) {
+                const candidate = candidates[index];
+                await expect(autoCompetition.vote(competitionId, 
+                    candidate, 10 + index))
+                    .to.emit(autoCompetition, "Vote")
+                    .withArgs(competitionId, candidate, singer.address, 10 + index)
+            }
+            
+        })
+    })
+
+    describe("# auto finish competition", () => {
+        
     })
 })
