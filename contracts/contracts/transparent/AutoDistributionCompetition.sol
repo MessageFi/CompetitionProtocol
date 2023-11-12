@@ -2,7 +2,6 @@
 pragma solidity ^0.8.17;
 
 import "./DefaultCompetition.sol";
-import "hardhat/console.sol";
 import "@chainlink/contracts/src/v0.8/automation/AutomationCompatible.sol";
 
 contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible{

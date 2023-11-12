@@ -5,7 +5,8 @@ task("deploy:competitionProtocol", "Deploy default competition protocol contract
     .setAction(async ({ logs}, 
         { ethers, upgrades, run }) =>{
             const DefaultCompetition = await ethers.getContractFactory("DefaultCompetition");
-            const competitionProtocol = await upgrades.deployProxy(DefaultCompetition, []);
+            const competitionProtocol = await DefaultCompetition.deploy();
+            await competitionProtocol.waitForDeployment();
 
             if(logs){
                 console.log("DefaultCompetition deployed to:", await competitionProtocol.getAddress());
@@ -62,7 +63,8 @@ task("deploy:autoDistribution", "Deploy auto distribution competition contracts"
     .setAction(async ({ logs}, 
         { ethers, upgrades, run }) =>{
             const AutoDistributionCompetition = await ethers.getContractFactory("AutoDistributionCompetition");
-            const autoCompetition = await upgrades.deployProxy(AutoDistributionCompetition, []);
+            const autoCompetition = await AutoDistributionCompetition.deploy();
+            await autoCompetition.waitForDeployment();
 
             if(logs){
                 console.log("AutoDistributionCompetition deployed to:", await autoCompetition.getAddress());
