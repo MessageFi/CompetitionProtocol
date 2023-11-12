@@ -6,6 +6,7 @@ import { ethers, run } from "hardhat"
 import { AutoDistributionCompetition, Ticket20, Reward20 } from "../build/typechain"
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { expect } from "chai";
+import { any } from "hardhat/internal/core/params/argumentTypes";
 
 describe("AutoDistributionCompetition", () => {
     let autoCompetition: AutoDistributionCompetition
@@ -26,6 +27,14 @@ describe("AutoDistributionCompetition", () => {
         ticket = result["ticket"];
         reward = result["reward"];
     })
+
+    async function waitSecond(time: number): Promise<void> {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve();
+          }, time * 1000); 
+        });
+    }
 
     describe("# host competition", () => {
         it("Should create a competition", async () => {
@@ -69,6 +78,41 @@ describe("AutoDistributionCompetition", () => {
     })
 
     describe("# auto finish competition", () => {
-        
+
+        it("Should return winnes", async () => {
+            const result = await autoCompetition.details(competitionId);
+            expect(result.winners[0]).to.equal(candidates[1]);
+            expect(result.winners[1]).to.equal(candidates[0]);
+        })
+
+        it("Should auto finish competitions", async () => {
+            let endTime = await time.latest();
+            await autoCompetition.create(await ticket.getAddress(), 
+                await reward.getAddress(), rewards, 0, endTime + 86400)
+            await autoCompetition.create(await ticket.getAddress(), 
+                await reward.getAddress(), rewards, 0, endTime + 3)
+            await autoCompetition.create(await ticket.getAddress(), 
+                await reward.getAddress(), rewards, 0, endTime + 86400)
+            await waitSecond(5);
+
+            const result = await autoCompetition.checkUpkeep(new Uint8Array(new ArrayBuffer(0)));
+            expect(result["upkeepNeeded"]).to.equal(true);
+
+            const decodedResult = ethers.AbiCoder.defaultAbiCoder().decode(
+                ['uint256[10]'],
+                result["performData"]
+              );
+            expect(decodedResult[0][0]).to.equal(1);
+            expect(decodedResult[0][1]).to.equal(3);
+            expect(decodedResult[0][2]).to.equal(0);
+
+            const transaction = await autoCompetition.performUpkeep(result["performData"]);
+
+            expect(transaction).to.emit(autoCompetition, "DistributePrizes")
+            .withArgs(competitionId, rewards, [2, 1])
+
+            expect(transaction).to.emit(autoCompetition, "DistributePrizes")
+            .withArgs(3, rewards, [0, 0])
+        })
     })
 })

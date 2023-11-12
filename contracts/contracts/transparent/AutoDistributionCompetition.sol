@@ -3,8 +3,11 @@ pragma solidity ^0.8.17;
 
 import "./DefaultCompetition.sol";
 import "@chainlink/contracts/src/v0.8/automation/AutomationCompatible.sol";
+import "hardhat/console.sol";
 
 contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible{
+
+    event DistributePrizes(uint256 indexed id, uint256[] rewards, uint256[] winners);
 
     uint256 internal checkIndex;
 
@@ -20,7 +23,7 @@ contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible
         uint count = 0;
         // search finished competitions
         for (uint i = 0; i < 100; ++i) {
-            if (competitionMapping[i + checkIndex + 1].endTime <= block.timestamp) {
+            if (competitionMapping[i + checkIndex + 1].endTime != 0 && competitionMapping[i + checkIndex + 1].endTime <= block.timestamp) {
                 finishedCompetitions[count] = i + checkIndex + 1;
                 ++count;
             }
@@ -32,7 +35,6 @@ contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible
             upkeepNeeded = true;
             performData = abi.encode(finishedCompetitions);
         }
-
     }
 
     function performUpkeep(bytes calldata performData) external override {
@@ -65,9 +67,9 @@ contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible
                 address player = candidateMapping[id][competition.winners[i]].player;
                 SafeERC20.safeTransfer(competition.rewardCoin,
                  player, competition.rewards[i]);
-
-                emit WithdrawByPlayer(id, competition.winners[i], player, competition.rewards[i], 0);
             }
         }
+        console.log(checkIndex);
+        emit DistributePrizes(id, competition.rewards, competition.winners);
     }
 }
