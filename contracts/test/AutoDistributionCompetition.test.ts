@@ -113,6 +113,9 @@ describe("AutoDistributionCompetition", () => {
 
             expect(transaction).to.emit(autoCompetition, "DistributePrizes")
             .withArgs(3, rewards, [0, 0])
+
+            const signers = await ethers.getSigners()
+            expect(await reward.balanceOf(signers[1].address)).to.eql(BigInt(rewards[0]))
         })
     })
 })
