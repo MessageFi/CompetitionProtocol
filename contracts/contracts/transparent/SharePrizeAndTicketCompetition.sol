@@ -2,7 +2,6 @@
 pragma solidity ^0.8.17;
 
 import "./SharePrizeCompetition.sol";
-import "hardhat/console.sol";
 
 contract SharePrizeAndTicketCompetition is SharePrizeCompetition{
 

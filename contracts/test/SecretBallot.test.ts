@@ -90,7 +90,7 @@ describe("SecretBallot", () => {
             })
             const signers = await ethers.getSigners()
 
-            const transaction = ballotContract.connect(signers[2]).castVote(
+            const transaction = ballotContract.connect(signers[1]).castVote(
                 option,
                 fullProof.nullifierHash,
                 ballotId,
@@ -100,44 +100,4 @@ describe("SecretBallot", () => {
             await expect(transaction).to.emit(ballotContract, "Vote").withArgs(ballotId, option);
         })
     })
-
-
-    // describe("# joinGroup", () => {
-    //     it("Should allow users to join the group", async () => {
-    //         for await (const [i, user] of users.entries()) {
-    //             const transaction = feedbackContract.joinGroup(user.commitment)
-
-    //             group.addMember(user.commitment)
-
-    //             await expect(transaction)
-    //                 .to.emit(semaphoreContract, "MemberAdded")
-    //                 .withArgs(groupId, i, user.commitment, group.root)
-    //         }
-    //     })
-    // })
-
-    // describe("# sendFeedback", () => {
-    //     const wasmFilePath = `${config.paths.build["snark-artifacts"]}/semaphore.wasm`
-    //     const zkeyFilePath = `${config.paths.build["snark-artifacts"]}/semaphore.zkey`
-
-    //     it("Should allow users to send feedback anonymously", async () => {
-    //         const feedback = formatBytes32String("Hello World")
-
-    //         const fullProof = await generateProof(users[1], group, groupId, feedback, {
-    //             wasmFilePath,
-    //             zkeyFilePath
-    //         })
-
-    //         const transaction = feedbackContract.sendFeedback(
-    //             feedback,
-    //             fullProof.merkleTreeRoot,
-    //             fullProof.nullifierHash,
-    //             fullProof.proof
-    //         )
-
-    //         await expect(transaction)
-    //             .to.emit(semaphoreContract, "ProofVerified")
-    //             .withArgs(groupId, fullProof.merkleTreeRoot, fullProof.nullifierHash, groupId, fullProof.signal)
-    //     })
-    // })
 })

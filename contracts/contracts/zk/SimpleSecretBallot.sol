@@ -4,7 +4,6 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/utils/Context.sol";
 import "./interfaces/ISemaphoreVoting.sol";
 import "./interfaces/ISimpleSecretBallot.sol";
-import "hardhat/console.sol";
 
 contract SimpleSecretBallot is ISimpleSecretBallot, Context{
 
@@ -123,7 +122,6 @@ contract SimpleSecretBallot is ISimpleSecretBallot, Context{
 
     function castVote(uint32 option, uint256 nullifierHash,
      uint256 ballotId, uint256[8] calldata proof) public override {
-        console.log(_msgSender());
         if (voting.pollState(ballotId) != ISemaphoreVoting.PollState.Ongoing 
             || ballots[ballotId].endtime <= block.timestamp) {
             revert BallotIsNotOnGoing();

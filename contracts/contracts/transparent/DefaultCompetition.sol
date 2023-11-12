@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "./interfaces/IBaseCompetition.sol";
 import "./interfaces/ITeller.sol";
-import "hardhat/console.sol";
 
 library Structs{
     struct Candidate{
@@ -35,8 +34,8 @@ library Structs{
 }
 
 contract DefaultCompetition is
-    AccessControlUpgradeable,
-    ReentrancyGuardUpgradeable,
+    AccessControl,
+    ReentrancyGuard,
     IBaseCompetition
 {
     modifier onlyHost(Structs.Competition storage competition) {
@@ -70,8 +69,8 @@ contract DefaultCompetition is
 
     // competition => candidate => reward status
     mapping(uint256 => mapping(uint256 => bool)) public rewardIsWithdraw;
-
-    function initialize() public initializer {
+    
+    constructor(){
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     }
 
@@ -94,7 +93,6 @@ contract DefaultCompetition is
             revert EmptyRewards();
         }
         uint256 totalRewards = _totalRewards(rewards);
-        console.log("totalRewards: ", totalRewards);
         SafeERC20.safeTransferFrom(
             IERC20(rewardCoin),
             _msgSender(),
@@ -138,8 +136,6 @@ contract DefaultCompetition is
     {
         candidateId = ++competitionMapping[id].totalCandidates;
         candidateMapping[id][candidateId].player = player;
-        ++competitionMapping[id].totalCandidates;
-
         emit NewCandidate(id, candidateId, player);
         return candidateId;
     }

@@ -2,7 +2,6 @@
 pragma solidity ^0.8.17;
 
 import "./DefaultCompetition.sol";
-import "hardhat/console.sol";
 
 contract SharePrizeCompetition is DefaultCompetition{
     error InvalidProportion();
