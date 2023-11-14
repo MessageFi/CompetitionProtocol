@@ -18,13 +18,16 @@ contract GasslessSecretBallot is SimpleSecretBallot, EIP712{
     /// @dev Initializes the Semaphore Voting used to do vote by the user's ZK proofs.
     /// @param _voting: Semaphore Voting address.
     constructor(ISemaphoreVoting _voting)
-     SimpleSecretBallot(_voting) EIP712("GasslessSecretBallot", "1.0"){
+     SimpleSecretBallot(_voting) EIP712("GasslessSecretBallot", "1"){
     }
 
     function castVoteBySignature(address signer, uint32 option, uint256 nullifierHash,
      uint256 ballotId, uint256[8] calldata proof, bytes memory signature) external{
-        bytes32 digest = keccak256(abi.encode(SIGNATURE_VOTING, option, nullifierHash, ballotId, proof));
+        bytes32 digest = keccak256(abi.encode
+        (SIGNATURE_VOTING, option, nullifierHash, ballotId, keccak256(abi.encode(proof)))
+        );
         digest = keccak256(abi.encodePacked("\x19\x01", _domainSeparatorV4(), digest));
+        
         if(SignatureChecker.isValidSignatureNow(signer, digest, signature)){
             _vote(option, nullifierHash, ballotId, proof);
         }else {
