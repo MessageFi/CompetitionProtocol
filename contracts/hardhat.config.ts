@@ -6,6 +6,7 @@ import { resolve } from "path"
 import '@openzeppelin/hardhat-upgrades'
 import "./tasks/deploy"
 import "./tasks/deploy-transparent"
+import "./tasks/deploy-zk"
 
 dotenvConfig({ path: resolve(__dirname, ".env") })
 

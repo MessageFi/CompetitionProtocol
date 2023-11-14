@@ -38,7 +38,7 @@ contract SimpleSecretBallot is ISimpleSecretBallot, Context{
 
     /// @dev See {ISimpleSecretBallot-createBallot}.
     function createBallot(uint32[] memory options,
-     address[] memory voters) public override{
+     address[] memory voters) public virtual override{
         if(options.length == 0){
             revert InvalidParams();
         }
@@ -56,35 +56,35 @@ contract SimpleSecretBallot is ISimpleSecretBallot, Context{
     }
 
     /// @dev See {ISimpleSecretBallot-addVoter}.
-    function addVoter(uint256 ballotId, address voter) public override
+    function addVoter(uint256 ballotId, address voter) public virtual override
      onlyHost(ballotId) notStarted(ballotId){
         ballots[ballotId].voters[voter].valid = true;
         emit VoterAdded(ballotId, voter);
     }
 
     /// @dev See {ISimpleSecretBallot-removeVoter}.
-    function removeVoter(uint256 ballotId, address voter) public override
+    function removeVoter(uint256 ballotId, address voter) public virtual override
      onlyHost(ballotId) notStarted(ballotId){
         delete ballots[ballotId].voters[voter];
         emit VoterRemoved(ballotId, voter);
     }
 
     /// @dev See {ISimpleSecretBallot-addOption}.
-    function addOption(uint256 ballotId, uint32 option) public override
+    function addOption(uint256 ballotId, uint32 option) public virtual override
      onlyHost(ballotId) notStarted(ballotId){
         ballots[ballotId].options[option].valid = true;
         emit OptionAdded(ballotId, option);
     }
 
     /// @dev See {ISimpleSecretBallot-removeOption}.
-    function removeOption(uint256 ballotId, uint32 option) public override
+    function removeOption(uint256 ballotId, uint32 option) public virtual override
      onlyHost(ballotId) notStarted(ballotId){
         delete ballots[ballotId].options[option];
         emit OptionRemoved(ballotId, option);
     }
 
     /// @dev See {ISimpleSecretBallot-registerCommitment}.
-    function registerCommitment(uint256 ballotId, uint256 identityCommitment) public override{
+    function registerCommitment(uint256 ballotId, uint256 identityCommitment) public virtual override{
         if (!ballots[ballotId].voters[_msgSender()].valid) {
             revert CallerIsNotVoter();
         }
@@ -98,7 +98,7 @@ contract SimpleSecretBallot is ISimpleSecretBallot, Context{
     }
 
     /// @dev See {ISimpleSecretBallot-startBallot}.
-    function startBallot(uint256 ballotId, uint256 duration) public override
+    function startBallot(uint256 ballotId, uint256 duration) public virtual override
      onlyHost(ballotId) {
         if (duration == 0) {
             revert InvalidTime();
@@ -111,7 +111,7 @@ contract SimpleSecretBallot is ISimpleSecretBallot, Context{
     }
 
     /// @dev See {ISimpleSecretBallot-endBallot}.
-    function endBallot(uint256 ballotId) public override {
+    function endBallot(uint256 ballotId) public virtual override {
         if (ballots[ballotId].endtime > block.timestamp) {
             revert BallotIsOnGoing();
         }
@@ -121,7 +121,12 @@ contract SimpleSecretBallot is ISimpleSecretBallot, Context{
     }
 
     function castVote(uint32 option, uint256 nullifierHash,
-     uint256 ballotId, uint256[8] calldata proof) public override {
+     uint256 ballotId, uint256[8] calldata proof) public virtual override {
+        _vote(option, nullifierHash, ballotId, proof);
+     }
+
+     function _vote(uint32 option, uint256 nullifierHash,
+     uint256 ballotId, uint256[8] calldata proof) internal{
         if (voting.pollState(ballotId) != ISemaphoreVoting.PollState.Ongoing 
             || ballots[ballotId].endtime <= block.timestamp) {
             revert BallotIsNotOnGoing();
