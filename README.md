@@ -7,6 +7,17 @@ Competition protocol is an infrastructure to create on-chain events and secret b
 Competition protocol([original version][pre]) started from the [Eth Hong Kong Hackthon][hackthon hk] Otc. 2023 and won the second prize. Now, it is rebuilt by yarn and other features.
 Here is the list of developing plans:
 
+| Task         | Classification   | State   | Progress rate |
+|--------------|---------|---------|---------------|
+| Base Competition | Transparent contracts|Completed    | 100%     |
+| Auto Distribution Competition | Transparent contracts|Completed    | 100%     |
+| Share Prize Competition | Transparent contracts|Completed    | 100%     |
+| Share Prize And Tickets Competition | Transparent contracts|Completed    | 100%     |
+| Secret Voting | ZK contracts|Completed    | 100%     |
+| Gassless Secret Voting | ZK contracts|Completed    | 100%     |
+| Auto Distribution Gassless Secret Voting | ZK contracts|Planned    | 0%     |
+| The graph | Backend |Planned    | 0%     |
+| Front-end Demo | Front-end |Developing    | 40%     |
 
 ## Features
 
@@ -16,11 +27,21 @@ Here is the list of developing plans:
 - Support EIP712 to do vote in secret ballots without gass payment
 - High scalable and expandable
 
-## 
+## System Structure
+![structure](https://github.com/WeyNiDrop/CompetitionProtocol/blob/main/CompetitionProtocol.drawio.png?raw=true)
 
+## Build and tests
 
-
-
+```sh
+git clone https://github.com/MessageFi/CompetitionProtocol
+cd CompetitionProtocol/contracts
+cp .env.example .env
+yarn
+```
+Run test
+```sh
+yarn test
+```
 
 
 
