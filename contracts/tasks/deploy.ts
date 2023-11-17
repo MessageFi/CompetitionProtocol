@@ -13,9 +13,9 @@ task("deploy", "Deploy contracts")
                 logs
         })
 
-        const baloot = await run("deploy:secretBallot", {semaphoreVoting:await semaphoreVoting.getAddress(),
+        const {baloot} = await run("deploy:secretBallot", {semaphoreVoting:await semaphoreVoting.getAddress(),
             logs: logs
-    })
+        })
 
 
         return {competitionProtocol,semaphoreVoting,semaphoreVerifierAddress, baloot}
