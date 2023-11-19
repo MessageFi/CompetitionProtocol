@@ -1,0 +1,40 @@
+.card {
+    width: 240px;
+    height: 80px;
+    padding: 0.5rem;
+    background: rgba(198, 198, 198, 0.34);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    border-bottom: 3px solid rgba(255, 255, 255, 0.440);
+    border-left: 2px  rgba(255, 255, 255, 0.545) outset;
+    box-shadow: -40px 50px 30px rgba(0, 0, 0, 0.280);
+    transform: skewX(10deg);
+    transition: .4s;
+    overflow: hidden;
+    color: white;
+    margin: 20px auto;
+  }
+  
+  .card:hover {
+    height: 120px;
+    transform: skew(0deg);
+  }
+
+  .card h1 {
+    font-family: 'TittleFont', sans-serif;
+    text-align: center;
+    margin: 1.3rem;
+    color: #cfef00;
+    text-shadow: -10px 5px 10px rgba(0, 0, 0, 0.573);
+  }
+
+  .p{
+
+    font-family: 'TittleFont' , sans-serif;
+    text-align: center;
+  }
+  
+  @font-face{
+    font-family: 'TittleFont';
+    src :url('/tittle.ttf') format('truetype')
+  }

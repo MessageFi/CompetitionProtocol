@@ -1,0 +1,63 @@
+ .container{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 2;
+ }
+
+ .list{
+    display:flex;
+    position: absolute;
+    left: 50%;
+    margin-left: -258.45px;
+ }
+
+ .tittle{
+    font-family: 'TittleFont' , sans-serif;
+    font-size: 1.25rem;
+    display: flex;
+    gap:10px;
+    color: #414244;
+ }
+ 
+ .btn {
+    margin: 0 5px;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: Helvetica,"sans-serif";
+    transition: all .2s;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: #cfef00;
+    border: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+  }
+  
+  .btn:hover {
+    background: #c4e201;
+  }
+  
+  .btn > svg {
+    width: 34px;
+    margin-left: 10px;
+    transition: transform .3s ease-in-out;
+  }
+  
+  .btn:hover svg {
+    transform: translateX(5px);
+  }
+  
+  .btn:active {
+    transform: scale(0.95);
+  }
+  
+  @font-face{
+    font-family: 'TittleFont';
+    src :url('/tittle.ttf') format('truetype')
+  }
