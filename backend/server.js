@@ -28,6 +28,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 /**
  * 确保前端在发送 POST 请求时使用了 application/x-www-form-urlencoded 作为 Content-Type
  */
+
+// 
   app.post('/addproject', (req, res) => {
     const { candidate_id,team_id,trace_id,name,logo,brand,introduction,git_hub_url,twitter_url,telegram_url,discord_url,demo_url,video_url,creat_time } = req.body;
     db.query('INSERT INTO project (candidate_id,team_id,trace_id,name,logo,brand,introduction,git_hub_url,twitter_url,telegram_url,discord_url,demo_url,video_url,creat_time) VALUES (?, ?)', [candidate_id,team_id,trace_id,name,logo,brand,introduction,git_hub_url,twitter_url,telegram_url,discord_url,demo_url,video_url,creat_time], (err, result) => {
