@@ -35,9 +35,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
       res.status(201).json({ id: result.insertId});
     });
   });
-  /**
+/**
  * @swagger
- * /projects:
+ * /getallprojectinfo:
  *   get:
  *     summary: Get a list of projects
  *     description: Retrieve a list of project from the database.
@@ -62,6 +62,22 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
  *                  demo_url: demo_url
  *                  video_url: video_url
  *                  creat_time: 2023-1-1
+ * 
+ *                - id: 2
+ *                  candidate_id: 2
+ *                  team_id: 2
+ *                  trace_id: 2
+ *                  name: competitionprotocol
+ *                  logo: ipfs.io
+ *                  brand: bbbbb
+ *                  introduction: This is a introduction
+ *                  git_hub_url: https://github.com/DankFang
+ *                  twitter_url: DankFang
+ *                  telegram_url: telegram_url
+ *                  discord_url: discord_url
+ *                  demo_url: demo_url
+ *                  video_url: video_url
+ *                  creat_time: 2023-1-1
  */
   app.get('/getallprojectinfo', (req, res) => {
     db.query('SELECT * FROM project', (err, results) => {
@@ -69,7 +85,34 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
       res.json(results);
     });
   });
-  
+/**
+ * @swagger
+ * /getprojectinfobyid:
+ *   get:
+ *     summary: Get a projectInfo of projects by Id
+ *     description: Retrieve a projectInfo of projectlist from the database.
+ *     responses:
+ *       200:
+ *         description: A projectInfo.
+ *         content:
+ *           application/json:
+ *             example:
+ *                - id: 1
+ *                  candidate_id: 1
+ *                  team_id: 1
+ *                  trace_id: 1
+ *                  name: competitionprotocol
+ *                  logo: ipfs.io
+ *                  brand: aaaaa
+ *                  introduction: This is a introduction
+ *                  git_hub_url: https://github.com/DankFang
+ *                  twitter_url: DankFang
+ *                  telegram_url: telegram_url
+ *                  discord_url: discord_url
+ *                  demo_url: demo_url
+ *                  video_url: video_url
+ *                  creat_time: 2023-1-1
+ */
   app.get('/getprojectinfobyid/:id', (req, res) => {
     const projectId = req.params.id;
     db.query('SELECT * FROM project WHERE id = ?', [projectId], (err, results) => {
