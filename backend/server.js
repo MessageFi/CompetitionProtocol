@@ -28,8 +28,34 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 /**
  * 确保前端在发送 POST 请求时使用了 application/x-www-form-urlencoded 作为 Content-Type
  */
-
-// 
+/**
+ * @swagger
+ * /addproject:
+ *   post:
+ *     summary: Add a projectInfo to the database
+ *     description: Add a list of project to the database.
+ *     responses:
+ *       200:
+ *         description: A list of projects.
+ *         content:
+ *           application/json:
+ *             example:
+ *                - id: 1
+ *                  candidate_id: 1
+ *                  team_id: 1
+ *                  trace_id: 1
+ *                  name: competitionprotocol
+ *                  logo: ipfs.io
+ *                  brand: aaaaa
+ *                  introduction: This is a introduction
+ *                  git_hub_url: https://github.com/DankFang
+ *                  twitter_url: DankFang
+ *                  telegram_url: telegram_url
+ *                  discord_url: discord_url
+ *                  demo_url: demo_url
+ *                  video_url: video_url
+ *                  creat_time: 2023-1-1
+ */
   app.post('/addproject', (req, res) => {
     const { candidate_id,team_id,trace_id,name,logo,brand,introduction,git_hub_url,twitter_url,telegram_url,discord_url,demo_url,video_url,creat_time } = req.body;
     db.query('INSERT INTO project (candidate_id,team_id,trace_id,name,logo,brand,introduction,git_hub_url,twitter_url,telegram_url,discord_url,demo_url,video_url,creat_time) VALUES (?, ?)', [candidate_id,team_id,trace_id,name,logo,brand,introduction,git_hub_url,twitter_url,telegram_url,discord_url,demo_url,video_url,creat_time], (err, result) => {
