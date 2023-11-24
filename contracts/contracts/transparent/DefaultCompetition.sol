@@ -145,6 +145,14 @@ contract DefaultCompetition is
         uint256 candidate,
         uint256 tickets
     ) external override virtual nonReentrant ongoing(competitionMapping[id]) {
+        _vote( id, candidate, tickets);
+    }
+
+    function _vote(
+        uint256 id,
+        uint256 candidate,
+        uint256 tickets
+    ) internal ongoing(competitionMapping[id]) {
         if (tickets < 1) {
             revert InvalidTickets();
         }
