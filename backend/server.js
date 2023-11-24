@@ -358,5 +358,5 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   
   // Start the server
   app.listen(3000, () => {
-    console.log(`Server is running on http://localhost:3000`);
+    console.log(`Server is running on http://localhost:3000  api doc is http://127.0.0.1:3000/api-docs/`);
   });
