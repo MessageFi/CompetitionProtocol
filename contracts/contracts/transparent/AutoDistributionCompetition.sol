@@ -4,11 +4,21 @@ pragma solidity ^0.8.17;
 import "./DefaultCompetition.sol";
 import "@chainlink/contracts/src/v0.8/automation/AutomationCompatible.sol";
 
+/**
+ * @title AutoDistributionCompetition
+ * @author Evan
+ * @notice Auto distribute prizes by chainlink automation
+ */
 contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible{
+    
+    error CompetitionAlreadyChecked();
+    error InvalidId();
 
     event DistributePrizes(uint256 indexed id, uint256[] rewards, uint256[] winners);
 
     uint256 internal checkIndex;
+
+    mapping (uint256 => bool) checkStatus;
 
     function checkUpkeep(
         bytes calldata /* checkData */
@@ -22,8 +32,9 @@ contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible
         uint count = 0;
         // search finished competitions
         for (uint i = 0; i < 100; ++i) {
-            if (competitionMapping[i + checkIndex + 1].endTime != 0 && competitionMapping[i + checkIndex + 1].endTime <= block.timestamp) {
-                finishedCompetitions[count] = i + checkIndex + 1;
+            uint id = i + checkIndex + 1;
+            if (competitionMapping[id].endTime != 0 && competitionMapping[id].endTime <= block.timestamp && !checkStatus[id]) {
+                finishedCompetitions[count] = id;
                 ++count;
             }
             if(count == 10){
@@ -36,7 +47,7 @@ contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible
         }
     }
 
-    function performUpkeep(bytes calldata performData) external override {
+    function performUpkeep(bytes calldata performData) external virtual override nonReentrant{
         uint256[10] memory finishedCompetitions = abi.decode(performData, (uint256[10]));
         for (uint i = 0; i < finishedCompetitions.length; ++i) {
             if(finishedCompetitions[i] == 0){
@@ -47,6 +58,7 @@ contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible
                 checkIndex++;
             }
             _withdrawPrize(finishedCompetitions[i]);
+            
         }
     }
 
@@ -54,9 +66,13 @@ contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible
         uint256 id
     ) internal nonReentrant {
         Structs.Competition memory competition = competitionMapping[id];
-        if (block.timestamp <= competition.endTime) {
+        if (competition.endTime == 0 || block.timestamp <= competition.endTime) {
             revert CompetitionNotEnd();
         }
+        if(checkStatus[id]){
+            revert CompetitionAlreadyChecked();
+        }
+        checkStatus[id] = true;
         for (uint i = 0; i < competition.winners.length; ++i) {
             if(competition.winners[i] == 0){
                 break;
