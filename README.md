@@ -11,6 +11,7 @@ Here is the list of developing plans:
 |--------------|---------|---------|---------------|
 | Base Competition | Transparent contracts|Completed    | 100%     |
 | Auto Distribution Competition | Transparent contracts|Completed    | 100%     |
+| Lucky Voter Competition | Transparent contracts|Completed    | 100%     |
 | Share Prize Competition | Transparent contracts|Completed    | 100%     |
 | Share Prize And Tickets Competition | Transparent contracts|Completed    | 100%     |
 | Secret Voting | ZK contracts|Completed    | 100%     |
@@ -24,6 +25,7 @@ Here is the list of developing plans:
 - Totally onchain events, transprant or anonymous competition
 - ZK proof base Semaphore library, Snarks and Merkel tree
 - Auto distribute prizes by Chainlink automation
+- Generate random result by Chainlink VRF
 - Support EIP712 to do vote in secret ballots without gass payment
 - High scalable and expandable
 

@@ -72,3 +72,18 @@ task("deploy:autoDistribution", "Deploy auto distribution competition contracts"
 
             return {autoCompetition}
     });
+
+task("deploy:luckyCompetition", "Deploy lucky voter competition contracts")
+    .addOptionalParam("logs", "Print the logs", true, types.boolean)
+    .setAction(async ({ logs}, 
+        { ethers, upgrades, run }) =>{
+            const LuckyVoterCompetition = await ethers.getContractFactory("LuckyVoterCompetition");
+            const luckyCompetition = await LuckyVoterCompetition.deploy(7187, "0x8103b0a8a00be2ddc778e6e7eaa21791cd364625", "0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c");
+            await luckyCompetition.waitForDeployment();
+
+            if(logs){
+                console.log("LuckyVoterCompetition deployed to:", await luckyCompetition.getAddress());
+            }
+
+            return {luckyCompetition}
+    });

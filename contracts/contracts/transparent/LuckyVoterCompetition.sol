@@ -9,7 +9,7 @@ import "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
 /**
  * @title LuckyVoterCompetition
  * @author Evan
- * @notice In this contract, lucky voters will get sepecial prizes after a competition finish.
+ * @notice LuckyVoterCompetition is base AutoDistributionCompetition, in this contract, lucky voters will get sepecial prizes after a competition finished.
  *  Using chainlink VRF to generate the lucky dog.
  */
 contract LuckyVoterCompetition is AutoDistributionCompetition, VRFConsumerBaseV2{
@@ -43,6 +43,9 @@ contract LuckyVoterCompetition is AutoDistributionCompetition, VRFConsumerBaseV2
      * 
      */
     function putLuckyPrizes(uint256 id, uint256[] calldata prizes) external onlyHost(competitionMapping[id]){
+        if(competitionMapping[id].endTime < block.timestamp){
+            revert CompetitionEnded();
+        }
         if(luckyPrizes[id].length != 0){
             revert LuckyPrizesAlreadyPut();
         }
@@ -64,7 +67,7 @@ contract LuckyVoterCompetition is AutoDistributionCompetition, VRFConsumerBaseV2
         voters[id].push(_msgSender());
     }
 
-    function performUpkeep(bytes calldata performData) external virtual override nonReentrant{
+    function performUpkeep(bytes calldata performData) external virtual override{
         uint256[10] memory finishedCompetitions = abi.decode(performData, (uint256[10]));
         if(finishedCompetitions[0] == 0){
             revert InvalidParams();

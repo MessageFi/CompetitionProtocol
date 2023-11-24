@@ -152,7 +152,7 @@ contract DefaultCompetition is
         uint256 id,
         uint256 candidate,
         uint256 tickets
-    ) internal nonReentrant ongoing(competitionMapping[id]) {
+    ) internal ongoing(competitionMapping[id]) {
         if (tickets < 1) {
             revert InvalidTickets();
         }

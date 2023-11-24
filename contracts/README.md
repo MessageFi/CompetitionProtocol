@@ -13,6 +13,7 @@ npx hardhat run scripts/deploy.ts
 ```
 ```solidity
 // Addresses on sepolia
+LuckyVoterCompetition 0x93D766C121B925A2ff8b58D39f4b9040F30932da
 AutoDistributionCompetition 0x80C68D00ccB94e1863CdA34F9B07596C935D9D26
 GasslessSecretBallot: 0xF99d2E2FF6A5dC75e5c6188085dE999BEf11Abc4
 SemaphoreVoting:  0x81a5A49c3406e8A4Fe16A6509f1609dc2C6b9f27
