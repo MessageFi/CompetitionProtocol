@@ -196,28 +196,36 @@ contract DefaultCompetition is
         uint256 candidate,
         uint256 tickets
     ) internal {
+        tickets = realTickets(id, tickets);
         uint256[] memory winnerArray = competitionMapping[id].winners;
-        for (uint i = 0; i < winnerArray.length; ++i) {
-            if (winnerArray[i] == 0) {
-                winnerArray[i] = candidate;
-                emit WinnerChanged(id);
-                break;
-            }
-            if (
-                realTickets(id, tickets) >
-                realTickets(id, candidateMapping[id][winnerArray[i]].tickets)
-            ) {
-                // insert and move
-                for (uint j = i; j < winnerArray.length; ++j) {
-                    uint cj = winnerArray[j];
-                    winnerArray[j] = candidate;
-                    candidate = cj;
+        if (winnerArray[winnerArray.length - 1] < tickets){
+            for (uint i = 0; i < winnerArray.length; ++i) {
+                if (winnerArray[i] == 0) {
+                    winnerArray[i] = candidate;
+                    break;
+                }else if (winnerArray[i] == candidate){
+                    return;
                 }
-                emit WinnerChanged(id);
-                break;
+                if (
+                    tickets >
+                    realTickets(id, candidateMapping[id][winnerArray[i]].tickets)
+                ) {
+                    uint previousCandiate = candidate;
+                    // insert and move
+                    for (uint j = i; j < winnerArray.length; ++j) {
+                        uint cj = winnerArray[j];
+                        winnerArray[j] = previousCandiate;
+                        if (cj == candidate){
+                            break;
+                        }
+                        previousCandiate = cj;
+                    }
+                    break;
+                }
             }
+            competitionMapping[id].winners = winnerArray;
         }
-        competitionMapping[id].winners = winnerArray;
+        
     }
 
     function withdrawByPlayer(
@@ -309,7 +317,7 @@ contract DefaultCompetition is
         rewardCoin = address(c.rewardCoin);
         ticketCoin = address(c.ticketCoin);
         totalCandidates = c.totalCandidates;
-        startTime = startTime;
-        endTime = endTime;
+        startTime = c.startTime;
+        endTime = c.endTime;
     }
 }

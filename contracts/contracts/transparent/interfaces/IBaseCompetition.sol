@@ -24,8 +24,6 @@ interface IBaseCompetition{
 
     event Vote(uint256 indexed id, uint256 candidate, address voter, uint256 tickets);
 
-    event WinnerChanged(uint256 indexed id);
-
     event WithdrawByPlayer(uint256 indexed id, uint256 candidate, address to, uint256 rewards, uint256 coins);
 
     event WithdrawByVoter(uint256 indexed id, uint256 candidate, address to, uint256 rewards, uint256 coins);
