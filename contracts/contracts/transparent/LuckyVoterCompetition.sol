@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "./AutoDistributionCompetition.sol";
 import "@chainlink/contracts/src/v0.8/automation/AutomationCompatible.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/VRFCoordinatorV2Interface.sol";
-import "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
+import "./AutoDistributionCompetition.sol";
 
 /**
  * @title LuckyVoterCompetition
@@ -12,10 +11,11 @@ import "@chainlink/contracts/src/v0.8/vrf/VRFConsumerBaseV2.sol";
  * @notice LuckyVoterCompetition is base AutoDistributionCompetition, in this contract, lucky voters will get sepecial prizes after a competition finished.
  *  Using chainlink VRF to generate the lucky dog.
  */
-contract LuckyVoterCompetition is AutoDistributionCompetition, VRFConsumerBaseV2{
+contract LuckyVoterCompetition is AutoDistributionCompetition{
 
     error LuckyPrizesAlreadyPut();
     error InvalidParams();
+    error OnlyCoordinatorCanFulfill(address have, address want);
 
     event PuttingLuckyPrizes(uint256 id, uint256[] prizes);
     event SendPrizeToLuckyVoter(uint256 id, address voter, uint256 prize);
@@ -26,16 +26,26 @@ contract LuckyVoterCompetition is AutoDistributionCompetition, VRFConsumerBaseV2
     mapping (uint256 => uint256[]) internal vrfRequests;
 
     //dev: chanlink configure
-
     VRFCoordinatorV2Interface private COORDINATOR;
     //subscription ID.
     uint64 private subscriptionId;
     bytes32 private keyHash;
 
-    constructor(uint64 _subscriptionId, address _vrfCoordinator,  bytes32 _keyHash) VRFConsumerBaseV2(_vrfCoordinator){
+    function initialize(uint64 _subscriptionId, address _vrfCoordinator, bytes32 _keyHash) public initializer {
         COORDINATOR = VRFCoordinatorV2Interface(_vrfCoordinator);
         subscriptionId = _subscriptionId;
         keyHash = _keyHash;
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    }
+
+    // rawFulfillRandomness is called by VRFCoordinator when it receives a valid VRF
+    // proof. rawFulfillRandomness then calls fulfillRandomness, after validating
+    // the origin of the call
+    function rawFulfillRandomWords(uint256 requestId, uint256[] memory randomWords) external {
+        if (msg.sender != address(COORDINATOR)) {
+        revert OnlyCoordinatorCanFulfill(msg.sender, address(COORDINATOR));
+        }
+        fulfillRandomWords(requestId, randomWords);
     }
 
     /**
@@ -105,7 +115,7 @@ contract LuckyVoterCompetition is AutoDistributionCompetition, VRFConsumerBaseV2
     /**
      *@dev Callback function used by VRF Coordinator
      */
-    function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal override {
+    function fulfillRandomWords(uint256 requestId, uint256[] memory randomWords) internal virtual {
         uint256[] memory finishedCompetitions = vrfRequests[requestId];
         for (uint i = 0; i < finishedCompetitions.length; ++i) {
             uint competition = finishedCompetitions[i];

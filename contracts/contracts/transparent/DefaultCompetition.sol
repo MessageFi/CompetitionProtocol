@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "./interfaces/IBaseCompetition.sol";
 import "./interfaces/ITeller.sol";
@@ -34,8 +34,8 @@ library Structs{
 }
 
 contract DefaultCompetition is
-    AccessControl,
-    ReentrancyGuard,
+    AccessControlUpgradeable,
+    ReentrancyGuardUpgradeable,
     IBaseCompetition
 {
     modifier onlyHost(Structs.Competition storage competition) {
@@ -69,10 +69,6 @@ contract DefaultCompetition is
 
     // competition => candidate => reward status
     mapping(uint256 => mapping(uint256 => bool)) public rewardIsWithdraw;
-    
-    constructor(){
-        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
-    }
 
     // create a competition
     function create(

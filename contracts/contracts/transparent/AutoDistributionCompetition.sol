@@ -47,7 +47,7 @@ contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible
         }
     }
 
-    function performUpkeep(bytes calldata performData) external virtual override nonReentrant{
+    function performUpkeep(bytes calldata performData) external virtual override{
         uint256[10] memory finishedCompetitions = abi.decode(performData, (uint256[10]));
         for (uint i = 0; i < finishedCompetitions.length; ++i) {
             if(finishedCompetitions[i] == 0){
