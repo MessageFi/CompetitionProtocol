@@ -89,3 +89,18 @@ task("deploy:luckyCompetition", "Deploy lucky voter competition contracts")
 
             return {luckyCompetition}
     });
+task("upgrade:luckyCompetition", "Upgrade lucky voter competition contracts")
+    .addOptionalParam("logs", "Print the logs", true, types.boolean)
+    .setAction(async ({ logs}, 
+        { ethers, upgrades, run }) =>{
+
+            const LuckyVoterCompetition = await ethers.getContractFactory("LuckyVoterCompetition")
+            
+            const luckyCompetition = await upgrades.upgradeProxy("0x55A682cCc2f091F44f1672DAAa7f1151cD3620e8", LuckyVoterCompetition);
+
+            if(logs){
+                console.log("LuckyVoterCompetition upgrade to:", await luckyCompetition.getAddress());
+            }
+
+            return {luckyCompetition}
+    });
