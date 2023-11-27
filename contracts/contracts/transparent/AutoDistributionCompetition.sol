@@ -47,7 +47,21 @@ contract AutoDistributionCompetition is DefaultCompetition, AutomationCompatible
         }
     }
 
-    function performUpkeep(bytes calldata performData) external virtual override nonReentrant{
+    function registerCandidate(
+        uint256 id,
+        address player
+    )
+        external override virtual
+        ongoing(competitionMapping[id])
+        returns (uint256 candidateId)
+    {
+        candidateId = ++competitionMapping[id].totalCandidates;
+        candidateMapping[id][candidateId].player = player;
+        emit NewCandidate(id, candidateId, player);
+        return candidateId;
+    }
+
+    function performUpkeep(bytes calldata performData) external virtual override{
         uint256[10] memory finishedCompetitions = abi.decode(performData, (uint256[10]));
         for (uint i = 0; i < finishedCompetitions.length; ++i) {
             if(finishedCompetitions[i] == 0){
