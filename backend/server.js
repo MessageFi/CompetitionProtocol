@@ -8,7 +8,7 @@ const swaggerSpec = require('./swagger');
 const db = mysql.createConnection({
     host :"localhost",
     user :"root",
-    password :"fyh0812",
+    password :"123456",
     database :"competitionprotocol"
 })
 db.connect((err) => {
