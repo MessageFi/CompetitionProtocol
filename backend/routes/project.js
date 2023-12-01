@@ -279,8 +279,6 @@ router.get('/getprojectinfobyid/:id', (req, res) => {
 router.put('/project/:id', (req, res) => {
 
     const creat_time = new Date();
-
-    console.log(creat_time);
     const projectId = req.params.id;
     const { candidate_id,team_id,trace_id,name,logo,brand,introduction,git_hub_url,twitter_url,telegram_url,discord_url,demo_url,video_url } = req.body;
     db.query('UPDATE project SET candidate_id = ?,team_id = ?,trace_id = ?,name = ?,logo = ?,brand = ?,introduction = ?,git_hub_url = ?,twitter_url = ?,telegram_url = ?,discord_url = ?,demo_url = ?,video_url = ?,creat_time = ? WHERE id = ?', [candidate_id,team_id,trace_id,name,logo,brand,introduction,git_hub_url,twitter_url,telegram_url,discord_url,demo_url,video_url,creat_time,projectId], (err, result) => {

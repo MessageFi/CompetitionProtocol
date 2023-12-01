@@ -159,7 +159,8 @@ router.get('/getateaminfo/:id', (req, res) => {
  */
 router.put('/updateteam/:id', (req, res) => {
     const id = req.params.id;
-    const { name, logo, members, leader, creat_time } = req.body;
+    const creat_time = new Date(); 
+    const { name, logo, members, leader } = req.body;
     const sql = 'UPDATE team SET name=?, logo=?, members=?, leader=?, create_time=? WHERE id=?';
     db.query(sql, [name, logo, members, leader, creat_time, id], (err, result) => {
       if (err) {
