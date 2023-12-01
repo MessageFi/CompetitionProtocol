@@ -10,7 +10,7 @@ const options = {
     },
   },
 //   apis: ['./routes/*.js'],
-  apis: ['./server.js'], // 根据你的实际情况调整路由文件的路径
+  apis: ['./server.js'], // 根据实际情况调整路由文件的路径
 };
 
 const swaggerSpec = swaggerJSDoc(options);
