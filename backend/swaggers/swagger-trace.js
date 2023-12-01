@@ -5,12 +5,12 @@ const options = {
     info: {
       title: 'Project API',
       version: '1.0.0',
-      description: 'API documentation for CompetitionProtocol-team',
+      description: 'API documentation for CompetitionProtocol-trace',
     },
   },
-  apis: ['./routes/team.js'],
+  apis: ['./routes/trace.js'],
 };
 
-const teamSwaggerSpec = swaggerJSDoc(options);
+const traceSwaggerSpec = swaggerJSDoc(options);
 
-module.exports = teamSwaggerSpec;
+module.exports = traceSwaggerSpec;
