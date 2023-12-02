@@ -11,7 +11,10 @@ const teamRoutes = require('./routes/team');
 const playerRoutes = require('./routes/player');
 const traceRoutes = require('./routes/trace');
 
+
 const swaggerUi = require('swagger-ui-express');
+
+
 const projectSwaggerSpec = require('./swaggers/swagger-project');
 const teamSwaggerSpec = require('./swaggers/swagger-team');
 const playerSwaggerSpec = require('./swaggers/swagger-player');
@@ -20,7 +23,7 @@ const traceSwaggerSpec = require('./swaggers/swagger-trace');
 const app = express();
 const db = require('./db/db');
 // 解析表单数据
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));//返回只解析urlencoded主体的中间件，并且只查看Content-Type头与类型选项匹配的请求
 app.use(express.json());
 
 
