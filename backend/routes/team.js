@@ -7,25 +7,48 @@ const db = require('../db/db');
  * @swagger
  * /addteam:
  *   post:
- *     summary: 添加新的团队
+ *     summary: Create a new team
+ *     tags:
+ *       - Team
+ *     description: Endpoint to add a new team to the database.
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
- *           example:
- *             name: 新团队
- *             logo: 团队Logo URL
- *             members: 5
- *             leader: 1
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               logo:
+ *                 type: string
+ *               members:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               leader:
+ *                 type: string
  *     responses:
  *       201:
- *         description: 团队添加成功
+ *         description: Successfully created a new team
  *         content:
  *           application/json:
- *             example:
- *               id: 1
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: The unique identifier for the newly created team
  *       400:
- *         description: 无效的输入数据
+ *         description: Invalid input data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message indicating invalid input data
  */
 router.post('/addteam',(req, res) => {
     const create_time = new Date();
@@ -44,6 +67,8 @@ router.post('/addteam',(req, res) => {
  * /getallteaminfo:
  *   get:
  *     summary: 获取所有团队信息
+ *     tags:
+ *       - Team
  *     responses:
  *       200:
  *         description: 成功获取所有团队信息
@@ -83,6 +108,8 @@ router.get('/getallteaminfo', (req, res) => {
  * /getateaminfo/{id}:
  *   get:
  *     summary: Get information about a team by ID
+ *     tags:
+ *       - Team
  *     parameters:
  *       - in: path
  *         name: id
@@ -126,6 +153,8 @@ router.get('/getateaminfo/:id', (req, res) => {
  * /updateteam/{id}:
  *   put:
  *     summary: Update a team by ID
+ *     tags:
+ *       - Team
  *     parameters:
  *       - in: path
  *         name: id
@@ -180,6 +209,8 @@ router.put('/updateteam/:id', (req, res) => {
  * /deleteteam/{id}:
  *   delete:
  *     summary: Delete a team by ID
+ *     tags:
+ *       - Team
  *     parameters:
  *       - in: path
  *         name: id

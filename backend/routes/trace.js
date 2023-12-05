@@ -6,12 +6,12 @@ const db = require('../db/db');
  * @swagger
  * /addtrace:
  *   post:
- *     summary: 添加追踪信息
- *     description: 向数据库中插入追踪信息。
+ *     summary: 添加赛道信息
+ *     description: 向数据库中插入赛道信息。
  *     tags:
  *       - Trace
  *     requestBody:
- *       description: 追踪信息对象
+ *       description: 赛道信息对象
  *       required: true
  *       content:
  *         application/json:
@@ -20,10 +20,10 @@ const db = require('../db/db');
  *             properties:
  *               name:
  *                 type: string
- *                 description: 追踪名称
+ *                 description: 赛道名称
  *               detail:
  *                 type: string
- *                 description: 追踪详情
+ *                 description: 赛道详情
  *               competition_id:
  *                 type: integer
  *                 description: 关联的竞赛ID
@@ -36,14 +36,14 @@ const db = require('../db/db');
  *               start_time:
  *                 type: string
  *                 format: date-time
- *                 description: 追踪开始时间
+ *                 description: 赛道开始时间
  *               end_time:
  *                 type: string
  *                 format: date-time
- *                 description: 追踪结束时间
+ *                 description: 赛道结束时间
  *     responses:
  *       201:
- *         description: 成功添加追踪信息
+ *         description: 成功添加赛道信息
  *         content:
  *           application/json:
  *             schema:
@@ -51,7 +51,7 @@ const db = require('../db/db');
  *               properties:
  *                 id:
  *                   type: integer
- *                   description: 新添加追踪信息的ID
+ *                   description: 新添加赛道信息的ID
  *       400:
  *         description: 无效的输入数据
  *         content:
@@ -207,19 +207,19 @@ router.get('/gettracebyid/:id', (req, res) => {
  * @swagger
  * /updatetrace/{id}:
  *   put:
- *     summary: 更新追踪信息
- *     description: 根据提供的追踪ID更新数据库中的追踪信息。
+ *     summary: 更新赛道信息
+ *     description: 根据提供的赛道ID更新数据库中的赛道信息。
  *     tags:
  *       - Trace
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: 要更新的追踪信息的ID
+ *         description: 要更新的赛道信息的ID
  *         schema:
  *           type: integer
  *     requestBody:
- *       description: 更新后的追踪信息对象
+ *       description: 更新后的赛道信息对象
  *       required: true
  *       content:
  *         application/json:
@@ -228,10 +228,10 @@ router.get('/gettracebyid/:id', (req, res) => {
  *             properties:
  *               name:
  *                 type: string
- *                 description: 新的追踪名称
+ *                 description: 新的赛道名称
  *               detail:
  *                 type: string
- *                 description: 新的追踪详情
+ *                 description: 新的赛道详情
  *               competition_id:
  *                 type: integer
  *                 description: 新的关联竞赛ID
@@ -244,14 +244,14 @@ router.get('/gettracebyid/:id', (req, res) => {
  *               start_time:
  *                 type: string
  *                 format: date-time
- *                 description: 新的追踪开始时间
+ *                 description: 新的赛道开始时间
  *               end_time:
  *                 type: string
  *                 format: date-time
- *                 description: 新的追踪结束时间
+ *                 description: 新的赛道结束时间
  *     responses:
  *       200:
- *         description: 追踪信息更新成功
+ *         description: 赛道信息更新成功
  *         content:
  *           application/json:
  *             schema:
@@ -261,7 +261,7 @@ router.get('/gettracebyid/:id', (req, res) => {
  *                   type: string
  *                   description: 更新成功消息
  *       404:
- *         description: 未找到指定ID的追踪信息
+ *         description: 未找到指定ID的赛道信息
  *         content:
  *           application/json:
  *             schema:
@@ -269,7 +269,7 @@ router.get('/gettracebyid/:id', (req, res) => {
  *               properties:
  *                 message:
  *                   type: string
- *                   description: 未找到追踪信息的消息
+ *                   description: 未找到赛道信息的消息
  *       500:
  *         description: 服务器内部错误
  *         content:
