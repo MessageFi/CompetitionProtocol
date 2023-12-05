@@ -10,6 +10,8 @@ const db = require('../db/db');
  * /addproject:
  *   post:
  *     summary: Add a new project
+ *     tags:
+ *       - Project
  *     description: Add a new project to the database.
  *     requestBody:
  *       required: true
@@ -90,6 +92,8 @@ router.post('/addproject', (req, res) => {
  * /getallprojectinfo:
  *   get:
  *     summary: Get a list of projects
+ *     tags:
+ *       - Project
  *     description: Retrieve a list of project from the database.
  *     responses:
  *       200:
@@ -140,6 +144,8 @@ router.get('/getallprojectinfo', (req, res) => {
  * /getprojectinfobyid/{id}:
  *   get:
  *     summary: Get project information by ID
+ *     tags:
+ *       - Project
  *     description: Retrieve project information from the database by its ID.
  *     parameters:
  *       - in: path
@@ -193,6 +199,8 @@ router.get('/getprojectinfobyid/:id', (req, res) => {
  * /project/{id}:
  *   put:
  *     summary: Update a project by ID
+ *     tags:
+ *       - Project
  *     description: Update an existing project in the database by its ID.
  *     parameters:
  *       - in: path
@@ -297,6 +305,8 @@ router.put('/project/:id', (req, res) => {
  * /project/{id}:
  *   delete:
  *     summary: Delete a project by ID
+ *     tags:
+ *       - Project
  *     description: Delete an existing project from the database by its ID.
  *     parameters:
  *       - in: path
