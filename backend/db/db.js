@@ -1,12 +1,12 @@
 const mysql = require("mysql");
 
 const dbConfig = {
-    host: "localhost",
-    user: "root",
+    host :"127.0.0.1",
+    user :"root",
     password: "fyh0812",
+    // password :"Cp@123456",
     database: "competitionprotocol"
 };
-
 const pool = mysql.createPool({
     connectionLimit: 10,
     ...dbConfig
