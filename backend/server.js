@@ -16,7 +16,8 @@ const traceRoutes = require('./routes/trace');
 const allSwaggerSpec = require('./swaggers/swagger-all');
 
 const app = express();
-const db = require('./db/db');
+const { connectToDatabase, query } = require('./db/db');
+connectToDatabase();
 // 解析表单数据
 app.use(express.urlencoded({ extended: true }));//返回只解析urlencoded主体的中间件，并且只查看Content-Type头与类型选项匹配的请求
 app.use(express.json());

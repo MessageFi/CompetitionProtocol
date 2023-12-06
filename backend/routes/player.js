@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db/db');
+const { connectToDatabase, query } = require('../db/db');
+connectToDatabase();
 
 
 /**
@@ -54,7 +55,7 @@ router.post('/addplayer', (req, res) => {
     const create_time = new Date();
     const { nickname, avatar, address, labels, email } = req.body;
     
-    db.query('INSERT INTO player (nickname, avatar, address, labels, email, create_time) VALUES (?, ?, ?, ?, ?, ?)',
+    query('INSERT INTO player (nickname, avatar, address, labels, email, create_time) VALUES (?, ?, ?, ?, ?, ?)',
         [nickname, avatar, address, labels, email, create_time], (err, result) => {
             if (err) {
                 console.log(err);
@@ -105,7 +106,7 @@ router.post('/addplayer', (req, res) => {
  *               message: Internal server error
  */
 router.get('/getplayers', (req, res) => {
-    db.query('SELECT * FROM player', (err, results) => {
+    query('SELECT * FROM player', (err, results) => {
         if (err) {
             console.log(err);
             res.status(500).json({ message: 'Internal server error' });
@@ -161,7 +162,7 @@ router.get('/getplayers', (req, res) => {
 router.get('/getplayer/:id', (req, res) => {
     const playerId = req.params.id;
 
-    db.query('SELECT * FROM player WHERE id = ?', [playerId], (err, results) => {
+    query('SELECT * FROM player WHERE id = ?', [playerId], (err, results) => {
         if (err) {
             console.log(err);
             res.status(500).json({ message: 'Internal server error' });
@@ -264,7 +265,7 @@ router.put('/updateplayer/:id', (req, res) => {
     const playerId = req.params.id;
     const { nickname, avatar, address, labels, email } = req.body;
     const create_time = new Date();
-    db.query(
+    query(
         'UPDATE player SET nickname=?, avatar=?, address=?, labels=?, email=?, create_time=? WHERE id=?',
         [nickname, avatar, address, labels, email, create_time, playerId],
         (err, result) => {
@@ -317,7 +318,7 @@ router.put('/updateplayer/:id', (req, res) => {
 router.delete('/deleteplayer/:id', (req, res) => {
     const playerId = req.params.id;
 
-    db.query('DELETE FROM player WHERE id = ?', [playerId], (err, result) => {
+    query('DELETE FROM player WHERE id = ?', [playerId], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500).json({ message: 'Internal server error' });

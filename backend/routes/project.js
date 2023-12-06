@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db/db');
-
+const { connectToDatabase, query } = require('../db/db');
+connectToDatabase();
 /**
  * 确保前端在发送 POST 请求时使用了 application/x-www-form-urlencoded 作为 Content-Type
  */
@@ -77,7 +77,7 @@ const db = require('../db/db');
 router.post('/addproject', (req, res) => {
     const creat_time = new Date();
     const { candidate_id, team_id, trace_id, name, logo, brand, introduction, git_hub_url, twitter_url, telegram_url, discord_url, demo_url, video_url } = req.body;
-    db.query('INSERT INTO project (candidate_id, team_id, trace_id, name, logo, brand, introduction, git_hub_url, twitter_url, telegram_url, discord_url, demo_url, video_url, creat_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [candidate_id, team_id, trace_id, name, logo, brand, introduction, git_hub_url, twitter_url, telegram_url, discord_url, demo_url, video_url, creat_time], (err, result) => {
+    query('INSERT INTO project (candidate_id, team_id, trace_id, name, logo, brand, introduction, git_hub_url, twitter_url, telegram_url, discord_url, demo_url, video_url, creat_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [candidate_id, team_id, trace_id, name, logo, brand, introduction, git_hub_url, twitter_url, telegram_url, discord_url, demo_url, video_url, creat_time], (err, result) => {
         if (err) {
             res.status(400).json({ message: 'Invalid input data' });
         } else {
@@ -134,7 +134,7 @@ router.post('/addproject', (req, res) => {
  *                  creat_time: 2023-1-1
  */
 router.get('/getallprojectinfo', (req, res) => {
-    db.query('SELECT * FROM project', (err, results) => {
+    query('SELECT * FROM project', (err, results) => {
       if (err) throw err;
       res.json(results);
     });
@@ -184,7 +184,7 @@ router.get('/getallprojectinfo', (req, res) => {
  */
 router.get('/getprojectinfobyid/:id', (req, res) => {
     const projectId = req.params.id;
-    db.query('SELECT * FROM project WHERE id = ?', [projectId], (err, results) => {
+    query('SELECT * FROM project WHERE id = ?', [projectId], (err, results) => {
       if (err) throw err;
       if (results.length > 0) {
         res.json(results);
@@ -289,7 +289,7 @@ router.put('/project/:id', (req, res) => {
     const creat_time = new Date();
     const projectId = req.params.id;
     const { candidate_id,team_id,trace_id,name,logo,brand,introduction,git_hub_url,twitter_url,telegram_url,discord_url,demo_url,video_url } = req.body;
-    db.query('UPDATE project SET candidate_id = ?,team_id = ?,trace_id = ?,name = ?,logo = ?,brand = ?,introduction = ?,git_hub_url = ?,twitter_url = ?,telegram_url = ?,discord_url = ?,demo_url = ?,video_url = ?,creat_time = ? WHERE id = ?', [candidate_id,team_id,trace_id,name,logo,brand,introduction,git_hub_url,twitter_url,telegram_url,discord_url,demo_url,video_url,creat_time,projectId], (err, result) => {
+    query('UPDATE project SET candidate_id = ?,team_id = ?,trace_id = ?,name = ?,logo = ?,brand = ?,introduction = ?,git_hub_url = ?,twitter_url = ?,telegram_url = ?,discord_url = ?,demo_url = ?,video_url = ?,creat_time = ? WHERE id = ?', [candidate_id,team_id,trace_id,name,logo,brand,introduction,git_hub_url,twitter_url,telegram_url,discord_url,demo_url,video_url,creat_time,projectId], (err, result) => {
       if (err) throw err;
       // 如果被影响的行数>0
       if (result.affectedRows > 0) {
@@ -331,7 +331,7 @@ router.put('/project/:id', (req, res) => {
  */
 router.delete('/project/:id', (req, res) => {
     const projectId = req.params.id;
-    db.query('DELETE FROM project WHERE id = ?', [projectId], (err, result) => {
+    query('DELETE FROM project WHERE id = ?', [projectId], (err, result) => {
       if (err) throw err;
       if (result.affectedRows > 0) {
         res.json({ message: 'project deleted successfully' });
