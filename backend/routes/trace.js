@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db/db');
+const { connectToDatabase, query } = require('../db/db');
+connectToDatabase();
 
 /**
  * @swagger
@@ -70,7 +71,7 @@ router.post('/addtrace', (req, res) => {
     const formattedStartTime = new Date(start_time).toISOString().slice(0, 19).replace('T', ' ');
     const formattedEndTime = new Date(end_time).toISOString().slice(0, 19).replace('T', ' ');
 
-    db.query(
+    query(
         'INSERT INTO trace (name, detail, competition_id, prizes, winners, start_time, end_time) VALUES (?, ?, ?, ?, ?, ?, ?)',
         [name, detail, competition_id, prizes, winners, formattedStartTime, formattedEndTime],
         (err, result) => {
@@ -140,7 +141,7 @@ router.post('/addtrace', (req, res) => {
  *         description: End time of the trace
  */
 router.get('/gettracedata', (req, res) => {
-    db.query('SELECT * FROM trace', (err, result) => {
+    query('SELECT * FROM trace', (err, result) => {
         if (err) {
             console.log(err);
             res.status(500).json({ message: 'Internal server error' });
@@ -189,7 +190,7 @@ router.get('/gettracedata', (req, res) => {
 router.get('/gettracebyid/:id', (req, res) => {
     const traceId = req.params.id;
 
-    db.query('SELECT * FROM trace WHERE id = ?', [traceId], (err, result) => {
+    query('SELECT * FROM trace WHERE id = ?', [traceId], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500).json({ message: 'Internal server error' });
@@ -289,7 +290,7 @@ router.put('/updatetrace/:id', (req, res) => {
     const formattedStartTime = new Date(start_time).toISOString().slice(0, 19).replace('T', ' ');
     const formattedEndTime = new Date(end_time).toISOString().slice(0, 19).replace('T', ' ');
 
-    db.query(
+    query(
         'UPDATE trace SET name = ?, detail = ?, competition_id = ?, prizes = ?, winners = ?, start_time = ?, end_time = ? WHERE id = ?',
         [name, detail, competition_id, prizes, winners, formattedStartTime, formattedEndTime, traceId],
         (err, result) => {
@@ -351,7 +352,7 @@ router.put('/updatetrace/:id', (req, res) => {
 router.delete('/deletetrace/:id', (req, res) => {
     const traceId = req.params.id;
 
-    db.query('DELETE FROM trace WHERE id = ?', [traceId], (err, result) => {
+    query('DELETE FROM trace WHERE id = ?', [traceId], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500).json({ message: 'Internal server error' });

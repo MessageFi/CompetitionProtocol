@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db/db');
-
+const { connectToDatabase, query } = require('../db/db');
+connectToDatabase();
 
 /**
  * @swagger
@@ -53,7 +53,7 @@ const db = require('../db/db');
 router.post('/addteam',(req, res) => {
     const create_time = new Date();
     const { name, logo, members, leader } = req.body;
-    db.query('INSERT INTO team (name, logo, members, leader, create_time) VALUES (?, ?, ?, ?, ?)', [ name, logo, members, leader, create_time], (err, result) => {
+    query('INSERT INTO team (name, logo, members, leader, create_time) VALUES (?, ?, ?, ?, ?)', [ name, logo, members, leader, create_time], (err, result) => {
         if (err) {
             console.log(err);
             res.status(400).json({ message: 'Invalid input data' });
@@ -94,8 +94,8 @@ router.get('/getallteaminfo', (req, res) => {
     // 执行查询所有字段的SQL语句
     const sql = 'SELECT * FROM team';
   
-    // 使用db.query执行查询
-    db.query(sql, (err, result) => {
+    // 使用query执行查询
+    query(sql, (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal Server Error' });
       } else {
@@ -135,7 +135,7 @@ router.get('/getallteaminfo', (req, res) => {
 router.get('/getateaminfo/:id', (req, res) => {
     const id = req.params.id;
     const sql = 'SELECT name, logo, members, leader, create_time FROM team WHERE id = ?';
-    db.query(sql, [id], (err, result) => {
+    query(sql, [id], (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal Server Error' });
       } else {
@@ -191,7 +191,7 @@ router.put('/updateteam/:id', (req, res) => {
     const creat_time = new Date(); 
     const { name, logo, members, leader } = req.body;
     const sql = 'UPDATE team SET name=?, logo=?, members=?, leader=?, create_time=? WHERE id=?';
-    db.query(sql, [name, logo, members, leader, creat_time, id], (err, result) => {
+    query(sql, [name, logo, members, leader, creat_time, id], (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal Server Error' });
       } else {
@@ -228,7 +228,7 @@ router.put('/updateteam/:id', (req, res) => {
 router.delete('/deleteteam/:id', (req, res) => {
     const id = req.params.id;
     const sql = 'DELETE FROM team WHERE id=?';
-    db.query(sql, [id], (err, result) => {
+    query(sql, [id], (err, result) => {
       if (err) {
         res.status(500).json({ message: 'Internal Server Error' });
       } else {
