@@ -1,0 +1,120 @@
+type DistributePrizes @entity(immutable: true) {
+  id: Bytes!
+  TransparentUpgradeableProxy_id: BigInt! # uint256
+  rewards: [BigInt!]! # uint256[]
+  winners: [BigInt!]! # uint256[]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Initialized @entity(immutable: true) {
+  id: Bytes!
+  version: Int! # uint8
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NewCandidate @entity(immutable: true) {
+  id: Bytes!
+  TransparentUpgradeableProxy_id: BigInt! # uint256
+  candidate: BigInt! # uint256
+  player: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NewCompetition @entity(immutable: true) {
+  id: Bytes!
+  TransparentUpgradeableProxy_id: BigInt! # uint256
+  host: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type PuttingLuckyPrizes @entity(immutable: true) {
+  id: Bytes!
+  TransparentUpgradeableProxy_id: BigInt! # uint256
+  prizes: [BigInt!]! # uint256[]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RoleAdminChanged @entity(immutable: true) {
+  id: Bytes!
+  role: Bytes! # bytes32
+  previousAdminRole: Bytes! # bytes32
+  newAdminRole: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RoleGranted @entity(immutable: true) {
+  id: Bytes!
+  role: Bytes! # bytes32
+  account: Bytes! # address
+  sender: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RoleRevoked @entity(immutable: true) {
+  id: Bytes!
+  role: Bytes! # bytes32
+  account: Bytes! # address
+  sender: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SendPrizeToLuckyVoter @entity(immutable: true) {
+  id: Bytes!
+  TransparentUpgradeableProxy_id: BigInt! # uint256
+  voter: Bytes! # address
+  prize: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Vote @entity(immutable: true) {
+  id: Bytes!
+  TransparentUpgradeableProxy_id: BigInt! # uint256
+  candidate: BigInt! # uint256
+  voter: Bytes! # address
+  tickets: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WithdrawByPlayer @entity(immutable: true) {
+  id: Bytes!
+  TransparentUpgradeableProxy_id: BigInt! # uint256
+  candidate: BigInt! # uint256
+  to: Bytes! # address
+  rewards: BigInt! # uint256
+  coins: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WithdrawByVoter @entity(immutable: true) {
+  id: Bytes!
+  TransparentUpgradeableProxy_id: BigInt! # uint256
+  candidate: BigInt! # uint256
+  to: Bytes! # address
+  rewards: BigInt! # uint256
+  coins: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

@@ -22,3 +22,4 @@ Pairing library: 0x921e9FE73124D7f8fCDBCe8AF5C7dfAe76e12104
 Poseidon library:  0x32e1E444c72cC151e4C5D7Fa9D9431A6Bb3aac25
 IncrementalBinaryTree library:  0x223C1D4dDd98dD4483FCE92E2B60411E131F025E
 ```
+E:/CompetitionProtocol/TheGraph/competitionprotocol/LuckyVoter.json
