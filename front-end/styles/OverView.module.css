@@ -1,0 +1,44 @@
+
+.container{
+    background-image: url('/bg1.jpg');
+    width: 600px;
+    height: 994.357px;
+    background-size: cover;
+    margin: 0 auto;
+   }
+ 
+ .tittle{
+    color: white;
+    text-align: center;
+    font-family: 'TittleFont' ,sans-serif;
+    font-size: 2.25rem;
+    letter-spacing: 3px;
+ }
+
+ .Stittle{
+   color: white;
+   text-align: center;
+   font-family: 'desc' ,sans-serif;
+   font-size: 2rem;
+   letter-spacing: 2px;
+   margin-top: 20px;
+   font-weight: bold;
+ }
+
+ .desc{
+    color: white;
+    width: 420px;
+    font-size: 1.05rem;
+    margin:20px auto;
+    font-family: 'desc', sans-serif;
+ }
+
+ @font-face{
+    font-family: 'TittleFont';
+    src :url('/tittle.ttf')
+  }
+  
+  @font-face {
+   font-family: 'desc';
+   src: url('/desc.ttf');
+  }

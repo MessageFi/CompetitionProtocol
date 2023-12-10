@@ -1,0 +1,126 @@
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 550px;
+  margin: 10px auto;
+}
+
+ .t{
+  text-align: center;
+  font-family: 'desc' ,sans-serif;
+  font-size: 2rem;
+  color: gray;
+  margin: 20px 0;
+ }
+
+ .lists{
+  padding: 10px;
+ }
+
+ .list{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  padding: 0 15px;
+ }
+
+ .ranking{
+  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+  width: 35px;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+ }
+
+ .numberFirst{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 0 10pc 10px 0;
+
+  background-color: #C850C0;
+  justify-content: center;
+  width: 70px;
+  text-align: center;
+
+ }
+
+ .numberSecond{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 0 10pc 10px 0;
+
+  background-color: #556cdc;
+  justify-content: center;
+  width: 70px;
+  text-align: center;
+
+ }
+
+ .numberThird{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 0 10pc 10px 0;
+
+  background-color: #FFCC70;
+  justify-content: center;
+  width: 70px;
+  text-align: center;
+
+ }
+
+.cards .card {
+  background-color: #d6ed4c;
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+  width: 550px;
+  font-family: 'desc' ,sans-serif;
+  border-radius: 10px;
+  color: black;
+  transition: 400ms;
+}
+
+.track{
+  margin-top: 10px;
+  text-align: center;
+  font-size: 1.25rem;
+  font-family: 'desc' ,sans-serif;
+}
+
+.trackName{
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight:bold;
+  letter-spacing: 1px;
+  font-family: 'desc' ,sans-serif;
+}
+
+.trackDesc{
+  text-align: center;
+  width: 380px;
+  margin: 10px auto;
+  font-family: 'desc' ,sans-serif;
+  font-weight: lighter;
+  color: rgb(73, 71, 71);
+}
+
+.cards .card:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.cards:hover > .card:not(:hover) {
+  filter: blur(10px);
+  transform: scale(0.9, 0.9);
+}
+
+@font-face {
+  font-family: 'desc';
+  src: url('/desc.ttf');
+}
