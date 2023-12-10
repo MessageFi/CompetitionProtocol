@@ -20,6 +20,8 @@ Here is the list of developing plans:
 | The graph | Backend |Planned    | 0%     |
 | Front-end Demo | Front-end |Developing    | 40%     |
 
+[Contract Addresses](https://github.com/MessageFi/CompetitionProtocol/blob/main/contracts/README.md)
+
 ## Features
 
 - Totally onchain events, transprant or anonymous competition
