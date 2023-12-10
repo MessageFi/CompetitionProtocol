@@ -15,11 +15,21 @@
     letter-spacing: 3px;
  }
 
+ .Stittle{
+   color: white;
+   text-align: center;
+   font-family: 'desc' ,sans-serif;
+   font-size: 2rem;
+   letter-spacing: 2px;
+   margin-top: 20px;
+   font-weight: bold;
+ }
+
  .desc{
     color: white;
     width: 420px;
     font-size: 1.05rem;
-    margin:30px auto;
+    margin:20px auto;
     font-family: 'desc', sans-serif;
  }
 

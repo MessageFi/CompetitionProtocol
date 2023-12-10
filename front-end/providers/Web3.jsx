@@ -3,22 +3,13 @@ import "@rainbow-me/rainbowkit/styles.css"
 import { configureChains, createConfig, WagmiConfig } from "wagmi"
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit"
 import {
-  arbitrum,
-  goerli,
-  mainnet,
-  optimism,
-  polygon,
-  zora
+  sepolia
 } from "wagmi/chains"
 import { publicProvider } from "wagmi/providers/public"
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    zora,
+    sepolia,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [goerli] : [])
   ],
   [publicProvider()]

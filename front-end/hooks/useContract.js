@@ -1,20 +1,16 @@
 import { ethers } from "ethers"
 import { useEffect, useState } from "react"
-import { useNetwork, useSigner } from "wagmi"
+import { useNetwork } from "wagmi"
 
 export const useCustomContract = (address, abi) => {
-  const { data: signer } = useSigner()
-  const { chain } = useNetwork()
-  const [contract, setContract] = useState(null)
-  useEffect(() => {
-    if (address && abi && chain && signer) {
-      setContract(new ethers.Contract(address, abi, signer))
-    }
-  }, [address, abi, chain, signer])
+    const provider = new ethers.providers.Web3Provider(window.ethereum,'any');
+    const signer = provider.getSigner();
+    const { chain } = useNetwork()
+    const contract = new ethers.Contract(address, abi, signer)
 
-  return {
-    contract,
-    chain,
-    signer
-  }
+    return {
+        contract,
+        provider,
+        signer
+    }
 }

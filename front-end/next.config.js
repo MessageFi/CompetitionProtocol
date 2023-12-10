@@ -5,6 +5,14 @@ const nextConfig = {
     config.resolve.fallback = { fs: false, net: false, tls: false };
     return config;
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "http://124.156.177.144:8000/:path*" 
+      }
+    ]
+  }
 };
 
 module.exports = nextConfig;
