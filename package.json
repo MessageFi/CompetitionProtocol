@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@graphprotocol/graph-cli": "^0.63.0",
     "mysql": "^2.18.1"
   }
 }
