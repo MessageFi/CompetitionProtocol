@@ -48,6 +48,11 @@ function getNetworks(): NetworksUserConfig {
           url: "https://arb1.arbitrum.io/rpc",
           chainId: 42161,
           accounts
+      },
+      "polygon-zk-test":{
+          url: "https://rpc.public.zkevm-test.net",
+          chainId: 1442,
+          accounts
       }
   }
 }
