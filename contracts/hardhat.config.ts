@@ -84,7 +84,21 @@ const hardhatConfig: HardhatUserConfig = {
       coinmarketcap: process.env.COINMARKETCAP_API_KEY
   },
   etherscan: {
-      apiKey: process.env.ETHERSCAN_API_KEY
+      apiKey: {
+        "goerli": process.env.ETHERSCAN_API_KEY,
+        "sepolia": process.env.ETHERSCAN_API_KEY,
+        "polygon-zk-test": process.env.POLYGON_API_KEY,
+     },
+      customChains: [
+        {
+          network: "polygon-zk-test",
+          chainId: 1442,
+          urls: {
+            apiURL: "https://api-testnet-zkevm.polygonscan.com/api",
+            browserURL: "https://testnet-zkevm.polygonscan.com"
+          }
+        }
+      ]
   }
 };
 
