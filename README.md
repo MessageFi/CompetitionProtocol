@@ -41,6 +41,7 @@ git clone https://github.com/MessageFi/CompetitionProtocol
 cd CompetitionProtocol/contracts
 cp .env.example .env
 yarn
+yarn download:snark-artifacts
 ```
 Run test
 ```sh
